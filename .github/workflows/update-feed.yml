@@ -1,0 +1,33 @@
+name: Update Research Feed
+
+on:
+  schedule:
+    # Runs daily at 9 AM UTC (4 AM EST / 1 AM PST)
+    - cron: '0 9 * * *'
+  workflow_dispatch:  # Allows manual trigger from GitHub UI
+  push:
+    branches: [ main ]  # Also runs when you push changes
+
+jobs:
+  update-feed:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: Generate research feed
+        run: python journal_aggregator.py
+      
+      - name: Commit and push if changed
+        run: |
+          git config user.name "GitHub Actions Bot"
+          git config user.email "actions@github.com"
+          git add research_feed.html
+          # Only commit if there are changes
+          git diff --quiet && git diff --staged --quiet || (git commit -m "🔄 Update research feed - $(date -u '+%Y-%m-%d %H:%M UTC')" && git push)
