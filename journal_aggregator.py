@@ -625,6 +625,8 @@ def generate_html(journal_data, output_file="research_feed.html"):
             }}
         }}
     </style>
+    <script data-goatcounter="https://kwalters.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
 </head>
 <body>
     <div class="header-card">
