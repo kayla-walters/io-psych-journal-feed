@@ -32,5 +32,5 @@ jobs:
         run: |
           git config user.name "GitHub Actions Bot"
           git config user.email "actions@github.com"
-          git add research_feed.html
+          git add -f research_feed.html
           git diff --quiet && git diff --staged --quiet || (git commit -m "🔄 Update research feed - $(date -u '+%Y-%m-%d %H:%M UTC')" && git push)
