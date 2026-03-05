@@ -2,11 +2,10 @@ name: Update Research Feed
 
 on:
   schedule:
-    # Runs daily at 9 AM UTC (4 AM EST / 1 AM PST)
     - cron: '0 9 * * *'
-  workflow_dispatch:  # Allows manual trigger from GitHub UI
+  workflow_dispatch:
   push:
-    branches: [ main ]  # Also runs when you push changes
+    branches: [ main ]
 
 jobs:
   update-feed:
@@ -21,8 +20,11 @@ jobs:
         with:
           python-version: '3.11'
       
+      - name: Install dependencies
+        run: pip install nltk
+      
       - name: Generate research feed
- 	env:
+        env:
           OPENALEX_API_KEY: ${{ secrets.OPENALEX_API_KEY }}
         run: python journal_aggregator.py
       
@@ -31,5 +33,4 @@ jobs:
           git config user.name "GitHub Actions Bot"
           git config user.email "actions@github.com"
           git add research_feed.html
-          # Only commit if there are changes
           git diff --quiet && git diff --staged --quiet || (git commit -m "🔄 Update research feed - $(date -u '+%Y-%m-%d %H:%M UTC')" && git push)
