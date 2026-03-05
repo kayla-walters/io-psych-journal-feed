@@ -1070,11 +1070,15 @@ def generate_html(journal_data, output_file="research_feed.html"):
                 </div>
             </div>
         </div>
-        
+"""
+    
+    html += f"""        
         <div class="article-count" id="article-count">
             Showing {total_articles} articles
         </div>
-        
+"""
+    
+    html += """        
         <div id="feed-container">
 """
     
